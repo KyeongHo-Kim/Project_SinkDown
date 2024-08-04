@@ -94,6 +94,10 @@
 //
 //void ABaseEnemyAIController::Chase()
 //{
+//	if (!IsInAttackRange(200.0f))
+//	{
+//		MoveToPlayer(static_cast<AActor*>(Player), 200.0f);
+//	}
 //}
 //
 //void ABaseEnemyAIController::Suspicion()
@@ -102,4 +106,62 @@
 //
 //void ABaseEnemyAIController::Patrol()
 //{
+//}
+//
+//void ABaseEnemyAIController::LookAtPlayer(AActor* Target, float RotationSpeed = 1.0f)
+//{
+//	if (Target)
+//	{
+//		APawn* ControlledPawn = GetPawn();
+//		if (ControlledPawn)
+//		{
+//			FVector TargetLocation = Target->GetActorLocation();
+//			FRotator CurrentRotation = ControlledPawn->GetActorRotation();
+//			FRotator TargetRotation = (TargetLocation - ControlledPawn->GetActorLocation()).Rotation();
+//
+//			FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), RotationSpeed);
+//			ControlledPawn->SetActorRotation(NewRotation);
+//		}
+//	}
+//}
+//
+//void ABaseEnemyAIController::MoveToPlayer(AActor* Target, float MoveSpeed)
+//{
+//	APawn* ControlledPawn = GetPawn();
+//	if (!ControlledPawn) return;
+//
+//	LookAtPlayer(Player);
+//
+//	FVector CurrentLocation = ControlledPawn->GetActorLocation();
+//	FVector TargetLocation = Target->GetActorLocation();
+//
+//	FVector Direction = (TargetLocation - CurrentLocation).GetSafeNormal();
+//	float DistanceToMove = MoveSpeed * GetWorld()->GetDeltaSeconds();
+//
+//	// 목표와의 거리 계산
+//	float DistanceToDestination = FVector::Dist(CurrentLocation, TargetLocation);
+//
+//	// 목표에 도달할 수 있는 거리인지 확인
+//	if (DistanceToDestination <= DistanceToMove)
+//	{
+//		ControlledPawn->SetActorLocation(TargetLocation);
+//		bIsMoving = false;  // 이동 종료
+//	}
+//	else
+//	{
+//		// 새로운 위치 계산
+//		FVector NewLocation = CurrentLocation + Direction * DistanceToMove;
+//		ControlledPawn->SetActorLocation(NewLocation);
+//		bIsMoving = true;  // 이동 중
+//	}
+//}
+//
+//bool ABaseEnemyAIController::IsInAttackRange(float AttackRange)
+//{
+//	APawn* ControlledPawn = GetPawn();
+//	if (!ControlledPawn) return false;
+//
+//	bool bIsWithinAttackRange = FVector::Distance(ControlledPawn->GetActorLocation(), Player->GetActorLocation()) <= AttackRange;
+//
+//	return bIsWithinAttackRange;
 //}

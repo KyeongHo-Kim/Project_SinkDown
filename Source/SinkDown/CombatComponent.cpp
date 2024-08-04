@@ -31,3 +31,4 @@ bool UCombatComponent::CanAttack(AActor* TargetActor)
 	UHealthComponent* TargetHealth = Cast<UHealthComponent>(TargetActor->FindComponentByClass(UHealthComponent::StaticClass()));
 	return TargetHealth != nullptr && !TargetHealth->IsDead();
 }
+
