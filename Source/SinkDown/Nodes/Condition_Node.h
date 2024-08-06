@@ -15,12 +15,14 @@ class SINKDOWN_API UCondition_Node : public UObject, public IBehaviorTree_Node
 	GENERATED_BODY()
 
 private:
+
+protected:
 	FConditionDelegate Condition;
 
 public:
 	UCondition_Node() {}
-	UCondition_Node(FConditionDelegate InCondition) : Condition(InCondition) {}
 
 	virtual ENodeStatus Tick() override;
 	
+	void SetCondition(FConditionDelegate InCondition) { Condition = InCondition; }
 };

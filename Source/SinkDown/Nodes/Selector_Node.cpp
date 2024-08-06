@@ -2,13 +2,16 @@
 
 ENodeStatus USelector_Node::Tick()
 {
-	for (IBehaviorTree_Node* Node : Children)
-	{
-		ENodeStatus Status = Node->Tick();
-		if (Status != ENodeStatus::Failure)
-		{
-			return Status;
-		}
-	}
-	return ENodeStatus::Failure;
+    for (const TWeakObjectPtr<IBehaviorTree_Node>& WeakNode : Children)
+    {
+        if (IBehaviorTree_Node* Node = WeakNode.Get())
+        {
+            ENodeStatus Status = Node->Tick();
+            if (Status != ENodeStatus::Failure)
+            {
+                return Status;
+            }
+        }
+    }
+    return ENodeStatus::Failure;
 }

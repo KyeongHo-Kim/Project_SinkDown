@@ -13,11 +13,14 @@ class SINKDOWN_API UAction_Node : public UObject, public IBehaviorTree_Node
 	GENERATED_BODY()
 
 private:
+
+protected:
 	FActionDelegate Action;
 	
 public:
 	UAction_Node() {}
-	UAction_Node(FActionDelegate InAction) : Action(InAction) {}
 
 	virtual ENodeStatus Tick() override;
+
+	void SetAction(FActionDelegate InAction) { Action = InAction; }
 };

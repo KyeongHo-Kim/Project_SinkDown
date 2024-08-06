@@ -4,11 +4,11 @@
 #include "UObject/Interface.h"
 #include "BehaviorTree_Node.generated.h"
 
-enum class ENodeStatus
+enum class ENodeStatus : uint8
 {
-    Success,
-    Failure,
-    Running
+    Success UMETA(DisplayName = "Success"),
+    Failure UMETA(DisplayName = "Failure"),
+    Running UMETA(DisplayName = "Running")
 };
 
 UINTERFACE(MinimalAPI)
