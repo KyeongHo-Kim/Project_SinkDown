@@ -1,6 +1,7 @@
 #include "SinkDownProject/Artefacts/SurveillanceLight.h"
 #include "Components/SpotLightComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "SinkDownProject/CombatSystem/Projectiles/BaseProjectile.h"
 
 ASurveillanceLight::ASurveillanceLight()
 {
@@ -34,6 +35,12 @@ void ASurveillanceLight::BeginPlay()
             RandomWaitTime,
             false
         );
+    }
+
+    if (SurveillanceLightMesh)
+    {
+        SurveillanceLightMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+        SurveillanceLightMesh->SetSimulatePhysics(false); 
     }
 }
 
@@ -70,4 +77,37 @@ void ASurveillanceLight::UpdateLightRotation(float DeltaTime)
     FRotator CurrentRotation = SpotLight->GetComponentRotation();
     FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, RotationSpeed);
     SpotLight->SetWorldRotation(NewRotation);
+}
+
+void ASurveillanceLight::EnablePhysics(AActor* ProjectileOwner, FVector ImpactPoint)
+{
+
+    GetWorld()->GetTimerManager().ClearTimer(PatrolTimerHandle);
+
+    if (SurveillanceLightMesh)
+    {
+        // Change the root component (using DetachFromComponent)
+        SurveillanceLightMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+        SetRootComponent(SurveillanceLightMesh);
+        SpotLight->AttachToComponent(SurveillanceLightMesh, FAttachmentTransformRules::KeepWorldTransform);
+
+        // Enabling Physics
+        SurveillanceLightMesh->SetSimulatePhysics(true);
+
+        // Apply force in the projectile's collision direction
+        float ImpulseStrength = 1000.0f; 
+        FVector ImpulseDirection = (SurveillanceLightMesh->GetComponentLocation() - ImpactPoint).GetSafeNormal();
+        SurveillanceLightMesh->AddImpulseAtLocation(ImpulseDirection * ImpulseStrength, ImpactPoint);
+    }
+}
+
+void ASurveillanceLight::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
+{
+    Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
+
+    // Check for conflicts with project tiles
+    if (ABaseProjectile* Projectile = Cast<ABaseProjectile>(Other))
+    {
+        EnablePhysics(Projectile->GetOwner(), HitLocation);
+    }
 }

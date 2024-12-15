@@ -30,6 +30,10 @@ public:
 protected:
     virtual void BeginPlay() override;
 
+
+    UFUNCTION() void EnablePhysics(AActor* ProjectileOwner, FVector ImpactPoint);
+    virtual void NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
+
 public:
     virtual void Tick(float DeltaTime) override;
 
