@@ -44,7 +44,7 @@ private:
     UPROPERTY(EditDefaultsOnly, Category = "Rewards") TSubclassOf<ADiary> DiaryClass;
     UFUNCTION() ADiary* SpawnDiary(const FVector& Location);
 public:
-    void StartGame();
+    UFUNCTION() void StartGame();
     void EndGame(bool bSuccess);
 
     ERollingBallState GetCurrentState() { return CurrentState; }

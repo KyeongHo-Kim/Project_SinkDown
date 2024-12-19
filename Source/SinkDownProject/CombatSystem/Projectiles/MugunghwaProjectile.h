@@ -16,6 +16,6 @@ public:
 protected:
 	virtual void OnHit(AActor* HitActor, AActor* ProjectileOwner) override;
 
-	float KnockbackForce;
-	float UpwardForce;
+	/*float KnockbackForce;
+	float UpwardForce;*/
 };

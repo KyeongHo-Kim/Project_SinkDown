@@ -5,6 +5,9 @@
 #include "MatrixWorldActivator.generated.h"
 
 class UStaticMeshComponent;
+class UMatrixWorldGameComponent;
+class AMatrixWorldEnemy;
+class AMatrixWorldEnemyWayPoint;
 
 UCLASS()
 class SINKDOWNPROJECT_API AMatrixWorldActivator : public AInteractiveObjectBase
@@ -18,5 +21,10 @@ protected:
 	virtual void OnInteract() override;
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Mesh") UStaticMeshComponent* InteractiveMesh;
+	UPROPERTY(EditDefaultsOnly, Category = "Mesh") UStaticMeshComponent* InteractiveMesh;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Actor Reference") UMatrixWorldGameComponent* MatrixWorldGameComponent;
+	UPROPERTY(EditAnywhere, Category = "Path Points") TArray<AMatrixWorldEnemyWayPoint*> PathPoints;
+
+	void GameSetup();
 };

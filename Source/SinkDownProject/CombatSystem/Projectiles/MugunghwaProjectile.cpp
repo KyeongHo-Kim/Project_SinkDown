@@ -12,8 +12,8 @@ AMugunghwaProjectile::AMugunghwaProjectile()
         ProjectileMovement->MaxSpeed = 6000.0f;
     }
 
-    KnockbackForce = 3000.0f;
-    UpwardForce = 500.0f;
+    /*KnockbackForce = 3000.0f;
+    UpwardForce = 500.0f;*/
 
     InitialLifeSpan = 2.0f;
 }
