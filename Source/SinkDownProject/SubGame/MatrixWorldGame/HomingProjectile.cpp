@@ -3,6 +3,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Character.h"
+#include "SinkDownProject/HealthSystem/HealthComponent.h"
 
 AHomingProjectile::AHomingProjectile()
 {
@@ -18,7 +19,6 @@ void AHomingProjectile::BeginPlay()
 	
 	if (ProjectileMesh)
 	{
-		//ProjectileMesh->SetSimulatePhysics(true);
 		ProjectileMesh->SetNotifyRigidBodyCollision(true);
 		ProjectileMesh->OnComponentHit.AddDynamic(this, &AHomingProjectile::OnHit);
 	}
@@ -66,6 +66,11 @@ void AHomingProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, 
 {
 	if (OtherActor && OtherActor != this)
 	{
+		if (UHealthComponent* HealthComp = OtherActor->FindComponentByClass<UHealthComponent>())
+		{
+			HealthComp->TakeMaxDamage();
+		}
+
 		ACharacter* HitCharacter = Cast<ACharacter>(OtherActor);
 		if (HitCharacter)
 		{

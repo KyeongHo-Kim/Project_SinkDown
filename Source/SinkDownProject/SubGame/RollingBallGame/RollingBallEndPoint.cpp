@@ -1,4 +1,3 @@
-// RollingBallEndPoint.cpp
 #include "SinkDownProject/SubGame/RollingBallGame/RollingBallEndPoint.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"

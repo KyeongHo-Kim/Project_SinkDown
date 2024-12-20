@@ -6,6 +6,10 @@
 
 class AMatrixWorldEnemy;
 class AMatrixWorldEnemyWayPoint;
+class ADiary;
+class APhysicsDoor;
+class ATriggerVolume;
+class USoundBase;
 
 UENUM()
 enum class EMatrixWorldState
@@ -47,9 +51,19 @@ private:
 	void UpdateEnemySpeed();
 	void CleanupGame();
 
+	UFUNCTION() virtual void OnPlayerDeath();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Rewards") TSubclassOf<ADiary> DiaryClass;
+	UPROPERTY(EditDefaultsOnly, Category = "Rewards") FVector DiarySpawnOffset = FVector(0.0f, 0.0f, 0.0f);
+	UFUNCTION() ADiary* SpawnDiary(const FVector& Location);
+
+	UPROPERTY(EditInstanceOnly, Category = "Door") APhysicsDoor* MatrixWorldDoor;
+	UPROPERTY(EditInstanceOnly, Category = "Door") ATriggerVolume* MatrixWorldTriggerVolume;
+
+	UPROPERTY(EditAnywhere, Category = "Sound") USoundBase* ClearSound;
 public:
 	UFUNCTION() void StartGame();
-	void EndGame();
+	void EndGame(bool Success);
 	void SetPathPoints(const TArray<AMatrixWorldEnemyWayPoint*>& Points) { PathPoints = Points; }
 	EMatrixWorldState GetCurrentState() const { return CurrentState; }
 };

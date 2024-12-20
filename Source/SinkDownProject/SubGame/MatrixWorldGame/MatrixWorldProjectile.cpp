@@ -1,6 +1,7 @@
 #include "SinkDownProject/SubGame/MatrixWorldGame/MatrixWorldProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "SinkDownProject/HealthSystem/HealthComponent.h"
 
 AMatrixWorldProjectile::AMatrixWorldProjectile()
 {
@@ -76,4 +77,9 @@ void AMatrixWorldProjectile::UpdateProjectileDirection(float DeltaTime)
 void AMatrixWorldProjectile::OnHit(AActor* HitActor, AActor* ProjectileOwner)
 {
     Super::OnHit(HitActor, ProjectileOwner);
+
+    if (UHealthComponent* HealthComp = HitActor->FindComponentByClass<UHealthComponent>())
+    {
+        HealthComp->TakeMaxDamage();
+    }
 }
