@@ -14,7 +14,7 @@
 
 UMatrixWorldGameComponent::UMatrixWorldGameComponent()
 {
-	GameDuration = 5.0f;
+	GameDuration = 30.0f;
 	InitialEnemySpeed = 600.0f;
 	SpeedIncreaseRate = 50.0f;
 
@@ -47,7 +47,7 @@ void UMatrixWorldGameComponent::BeginPlay()
 
 void UMatrixWorldGameComponent::StartGame()
 {
-	if (CurrentState != EMatrixWorldState::Inactive)
+	if (CurrentState != EMatrixWorldState::Inactive || CurrentState == EMatrixWorldState::Completed)
 	{
 		return;
 	}
@@ -194,8 +194,6 @@ void UMatrixWorldGameComponent::CleanupGame()
 		}
 	}
 	PathPoints.Empty();
-
-	CurrentState = EMatrixWorldState::Inactive;
 }
 
 
