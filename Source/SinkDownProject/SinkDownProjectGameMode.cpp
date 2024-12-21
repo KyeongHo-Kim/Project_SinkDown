@@ -5,6 +5,7 @@
 #include "SinkDownProject/HealthSystem/HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "SinkDownProject/Animations/PlayerAnimInstance.h"
+#include "SinkDownProject/UI/DiaryHUDWidget.h"
 
 ASinkDownProjectGameMode::ASinkDownProjectGameMode()
 {
@@ -30,8 +31,17 @@ void ASinkDownProjectGameMode::BeginPlay()
 		PC->SetShowMouseCursor(false);
 		FInputModeGameOnly InputMode;
 		PC->SetInputMode(InputMode);
-	}
 
+		// Create and display the Diary HUD Widget
+		if (DiaryHUDWidgetClass)
+		{
+			DiaryHUDWidget = CreateWidget<UDiaryHUDWidget>(PC, DiaryHUDWidgetClass);
+			if (DiaryHUDWidget)
+			{
+				DiaryHUDWidget->AddToViewport();
+			}
+		}
+	}
 }
 
 void ASinkDownProjectGameMode::RespawnPlayer(ASinkDownProjectCharacter* DeadPlayer)

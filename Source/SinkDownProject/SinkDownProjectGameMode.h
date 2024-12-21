@@ -6,6 +6,7 @@
 
 class ARespawnPoint;
 class ASinkDownProjectCharacter;
+class UDiaryHUDWidget;
 
 UCLASS(minimalapi)
 class ASinkDownProjectGameMode : public AGameModeBase
@@ -22,6 +23,10 @@ private:
 	UPROPERTY() TArray<ARespawnPoint*> RespawnPoints;
 
 	void HandleRespawn(ASinkDownProjectCharacter* Player);
+
+
+	UPROPERTY() UDiaryHUDWidget* DiaryHUDWidget; 
+	UPROPERTY(EditDefaultsOnly, Category = "UI") TSubclassOf<UDiaryHUDWidget> DiaryHUDWidgetClass;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "RespawnDelay") float RespawnDelay;

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "SinkDownProject/InteractionSystem/Object/InteractiveObjectBase.h"
+#include "SinkDownProject/DataAsset/DiaryData.h"
 #include "Diary.generated.h"
 
 class UStaticMeshComponent;
@@ -35,4 +36,9 @@ private:
 	bool bIsDestroying;
 
 	void StartDestruction();
+
+
+	// UI
+	UPROPERTY(EditAnywhere, Category = "Diary") EDiaryPieceType PieceType;
+	UPROPERTY(EditAnywhere, Category = "Diary") UDiaryData* DiaryData;
 };

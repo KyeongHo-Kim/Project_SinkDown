@@ -3,6 +3,7 @@
 #include "kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "SinkDownProject/GameLevels/DiarySubsystem.h"
 
 ADiary::ADiary()
 {
@@ -24,6 +25,11 @@ void ADiary::BeginPlay()
 	Super::BeginPlay();
 
 	SetActorScale3D(FVector::ZeroVector);
+
+    if (!DiaryData)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("DiaryDataAsset is not set for Diary actor!"));
+    }
 }
 
 void ADiary::Tick(float DeltaTime)
@@ -88,6 +94,16 @@ void ADiary::OnInteract()
 {
     if (!bIsDestroying)
     {
+        if (UGameInstance* GameInstance = GetGameInstance())
+        {
+            if (UDiarySubsystem* DiarySubsystem = GameInstance->GetSubsystem<UDiarySubsystem>())
+            {
+                DiarySubsystem->CollectDiaryPiece(PieceType);
+
+                UE_LOG(LogTemp, Warning, TEXT("DiarySubsystem->CollectDiaryPiece(PieceType);"));
+            }
+        }
+
         StartDestruction();
     }
 }
