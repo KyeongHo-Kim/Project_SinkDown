@@ -31,6 +31,9 @@ class USkillManager;
 class UMugunghwaGameComponent;
 // Sound
 class USoundComponent;
+// Diary UI
+class UDiaryCollectionWidget;
+
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 // Crosshair Animation Delegate
@@ -109,6 +112,11 @@ class ASinkDownProjectCharacter : public ACharacter, public ITeamInterface
 	UInputAction* PressSAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* PressDAction;
+
+	/**DiaryCollectionWidget Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* DiaryCollectionWidgetAction;
+
 
 public:
 	ASinkDownProjectCharacter();
@@ -257,5 +265,12 @@ public:
 	//MugunghwaGame
 	void SetMugunghwaGameComponent(UMugunghwaGameComponent* NewComponent) { MugunghwaGameComponent = NewComponent; }
 	UMugunghwaGameComponent* GetMugunghwaGameComponent() const { return MugunghwaGameComponent; }
+
+private:
+	UPROPERTY() UDiaryCollectionWidget* DiaryCollectionWidget;
+	UPROPERTY(EditDefaultsOnly, Category = "UI") TSubclassOf<UDiaryCollectionWidget> DiaryCollectionWidgetClass;
+
+	void ToggleDiaryCollection();
+
 };
 

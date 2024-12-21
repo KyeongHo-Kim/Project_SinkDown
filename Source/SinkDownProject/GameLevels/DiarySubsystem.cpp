@@ -18,7 +18,7 @@ void UDiarySubsystem::CollectDiaryPiece(EDiaryPieceType PieceType)
         CollectedPieces.Add(PieceType);
         OnDiaryPieceCollected.Broadcast(PieceType);
 
-        UE_LOG(LogTemp, Warning, TEXT("Collected Diary Piece: %d"), static_cast<int32>(PieceType));
+        CheckAllPiecesCollected();
     }
 }
 
@@ -26,4 +26,18 @@ void UDiarySubsystem::CollectDiaryPiece(EDiaryPieceType PieceType)
 bool UDiarySubsystem::HasCollectedPiece(EDiaryPieceType PieceType) const
 {
     return CollectedPieces.Contains(PieceType);
+}
+
+// Verify that all fragments (5) have been collected
+bool UDiarySubsystem::HasCollectedAllPieces() const
+{
+    return CollectedPieces.Num() >= 5;  
+}
+
+void UDiarySubsystem::CheckAllPiecesCollected()
+{
+    if (HasCollectedAllPieces())
+    {
+        OnAllDiaryPiecesCollected.Broadcast();
+    }
 }

@@ -30,6 +30,9 @@
 #include "SinkDownProject/SubGame/MugunghwaGame/MugunghwaGameComponent.h"
 //PlayerSound
 #include "SinkDownProject/Player/SoundComponent.h"
+// DiaryWidget
+#include "SinkDownProject/UI/DiaryCollectionWidget.h"
+
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 ASinkDownProjectCharacter::ASinkDownProjectCharacter() 
@@ -72,7 +75,6 @@ ASinkDownProjectCharacter::ASinkDownProjectCharacter()
 	WeaponManager = CreateDefaultSubobject<UWeaponManager>(TEXT("WeaponManager"));
 	SkillManager = CreateDefaultSubobject<USkillManager>(TEXT("SkillManager"));
 	SoundComponent = CreateDefaultSubobject<USoundComponent>(TEXT("SoundComponent"));
-
 	//Interaction
 	InteractionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Interaction Box"));
 	InteractionBox->SetupAttachment(RootComponent);
@@ -140,6 +142,11 @@ void ASinkDownProjectCharacter::BeginPlay()
 		OnAimingProgressChanged.BindUObject(CrosshAir, &UCrosshairWidget::UpdateCrosshairSpread);
 	}
 
+	// Create a Diary Collection widget
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		DiaryCollectionWidget = CreateWidget<UDiaryCollectionWidget>(PC, DiaryCollectionWidgetClass);
+	}
 }
 
 void ASinkDownProjectCharacter::Tick(float DeltaTime)
@@ -204,6 +211,9 @@ void ASinkDownProjectCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		EnhancedInputComponent->BindAction(PressAAction, ETriggerEvent::Started, this, &ASinkDownProjectCharacter::HandleAKeyPressed);
 		EnhancedInputComponent->BindAction(PressSAction, ETriggerEvent::Started, this, &ASinkDownProjectCharacter::HandleSKeyPressed);
 		EnhancedInputComponent->BindAction(PressDAction, ETriggerEvent::Started, this, &ASinkDownProjectCharacter::HandleDKeyPressed);
+
+		// DiaryWidget
+		EnhancedInputComponent->BindAction(DiaryCollectionWidgetAction, ETriggerEvent::Started, this, &ASinkDownProjectCharacter::ToggleDiaryCollection);
 	}
 	else
 	{
@@ -658,6 +668,7 @@ void ASinkDownProjectCharacter::OnPlayerDeath()
 	}
 }
 
+// Mugunghwa Game UI
 void ASinkDownProjectCharacter::HandleWKeyPressed()
 {
 	if (MugunghwaGameComponent) MugunghwaGameComponent->ValidateKeyInput(EKeys::W);
@@ -675,6 +686,7 @@ void ASinkDownProjectCharacter::HandleDKeyPressed()
 	if (MugunghwaGameComponent) MugunghwaGameComponent->ValidateKeyInput(EKeys::D);
 }
 
+// Related to Player Falling
 void ASinkDownProjectCharacter::Landed(const FHitResult& Hit)
 {
 	Super::Landed(Hit);
@@ -705,5 +717,34 @@ void ASinkDownProjectCharacter::OnMovementModeChanged(EMovementMode PrevMovement
 	{
 		LastGroundedZ = GetActorLocation().Z;
 		bShouldCheckFallDamage = true;
+	}
+}
+
+
+// DiaryWidget
+void ASinkDownProjectCharacter::ToggleDiaryCollection()
+{
+	UE_LOG(LogTemp, Warning, TEXT("void ASinkDownProjectCharacter::ToggleDiaryCollection()"));
+	if (DiaryCollectionWidget)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Found DiaryCollectionWidget"));
+
+		DiaryCollectionWidget->ToggleVisibility();
+
+		if (APlayerController* PC = Cast<APlayerController>(GetController()))
+		{
+			if (DiaryCollectionWidget->IsVisible())
+			{
+				// accept game+UI input when the UI is open
+				FInputModeGameAndUI InputMode;
+				PC->SetInputMode(InputMode);
+			}
+			else
+			{
+				// When the UI is closed, use the game-only input
+				FInputModeGameOnly InputMode;
+				PC->SetInputMode(InputMode);
+			}
+		}
 	}
 }

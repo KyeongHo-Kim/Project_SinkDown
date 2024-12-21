@@ -6,6 +6,7 @@
 #include "DiarySubsystem.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDiaryPieceCollected, EDiaryPieceType, PieceType);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAllDiaryPiecesCollected);
 
 UCLASS()
 class SINKDOWNPROJECT_API UDiarySubsystem : public UGameInstanceSubsystem
@@ -32,4 +33,12 @@ public:
 
 	// Delegate called when collecting diary fragments
 	UPROPERTY(BlueprintAssignable, Category = "Diary") FOnDiaryPieceCollected OnDiaryPieceCollected;
+
+	// Verify that all fragments have been collected
+	UFUNCTION(BlueprintPure, Category = "Diary") bool HasCollectedAllPieces() const;
+	// Delegate called when all fragments are collected
+	UPROPERTY(BlueprintAssignable, Category = "Diary") FOnAllDiaryPiecesCollected OnAllDiaryPiecesCollected;
+
+protected:
+	void CheckAllPiecesCollected();
 };
