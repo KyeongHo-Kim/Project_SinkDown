@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -19,6 +17,5 @@ public:
     FName ZoneName;
 
     UFUNCTION() void OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor);
-    UFUNCTION()
-    void OnOverlapEnd(AActor* OverlappedActor, AActor* OtherActor);
+    UFUNCTION() void OnOverlapEnd(AActor* OverlappedActor, AActor* OtherActor);
 };

@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "SinkDownProject/Animations/PlayerAnimInstance.h"
 #include "SinkDownProject/UI/DiaryHUDWidget.h"
+#include "SinkDownProject/UI/CreditsWidget.h"
 
 ASinkDownProjectGameMode::ASinkDownProjectGameMode()
 {
@@ -100,4 +101,42 @@ void ASinkDownProjectGameMode::HandleRespawn(ASinkDownProjectCharacter* Player)
 	// Teleport to respawn point
 	Player->SetActorLocation(RespawnPoint->GetActorLocation() + FVector(50.0f,120.0f,0.0f));
 	Player->SetActorRotation(RespawnPoint->GetActorRotation());
+}
+
+
+void ASinkDownProjectGameMode::TransitionToMainMenu()
+{
+	// Clean up the UI
+	if (DiaryHUDWidget)
+	{
+		DiaryHUDWidget->RemoveFromParent();
+		DiaryHUDWidget = nullptr;
+	}
+
+	// Disable player input
+	if (APlayerController* PC = Cast<APlayerController>(GetWorld()->GetFirstPlayerController()))
+	{
+		PC->DisableInput(PC);
+	}
+
+	// Fade out effects
+	APlayerCameraManager* CameraManager = UGameplayStatics::GetPlayerCameraManager(this, 0);
+	if (CameraManager)
+	{
+		CameraManager->StartCameraFade(0.0f, 1.0f, 1.0f, FLinearColor::Black);
+	}
+
+	// Show credits and switch to main menu
+	if (CreditsWidgetClass)
+	{
+		UCreditsWidget* CreditsWidget = CreateWidget<UCreditsWidget>(GetWorld(), CreditsWidgetClass);
+		if (CreditsWidget)
+		{
+			CreditsWidget->AddToViewport(100);
+			return;  
+		}
+	}
+
+	// Switch directly to the main menu if no credit widget is present
+	UGameplayStatics::OpenLevel(this, TEXT("/Game/Levels/MainMenuMap"));
 }

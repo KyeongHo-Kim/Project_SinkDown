@@ -119,7 +119,7 @@ void USinkDownGameInstance::LoadGameplayContent()
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/Asset/ToysAsset/Map1/Meshes/SM_book_7")));
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/Asset/ToysAsset/Map1/Meshes/SM_book_8")));
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/Asset/ToysAsset/Map1/Meshes/SM_box")));
-    GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/Asset/ToysAsset/Map1/Meshes/SM_fabr_toys_001_1")));
+    GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/Asset/ToysAsset/ToysSet/Meshes/SM_fabr_toys_001_1")));
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/Asset/ToysAsset/ToysSet/Meshes/SM_kids_a4_000")));
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/Asset/ToysAsset/ModernDesk/BackgroundProps/StaticMeshs/SM_Lamp01")));
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/Asset/ToysAsset/ToysSet/Meshes/SM_toys_wood_cubes_002")));

@@ -7,6 +7,7 @@
 class ARespawnPoint;
 class ASinkDownProjectCharacter;
 class UDiaryHUDWidget;
+class UCreditsWidget;
 
 UCLASS(minimalapi)
 class ASinkDownProjectGameMode : public AGameModeBase
@@ -28,6 +29,8 @@ private:
 	UPROPERTY() UDiaryHUDWidget* DiaryHUDWidget; 
 	UPROPERTY(EditDefaultsOnly, Category = "UI") TSubclassOf<UDiaryHUDWidget> DiaryHUDWidgetClass;
 
+	UPROPERTY(EditDefaultsOnly, Category = "UI") TSubclassOf<UCreditsWidget> CreditsWidgetClass;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "RespawnDelay") float RespawnDelay;
 
@@ -35,7 +38,8 @@ protected:
 
 public:
 	void RespawnPlayer(ASinkDownProjectCharacter* DeadPlayer);
-	
+
+	UFUNCTION(BlueprintCallable, Category = "Game Flow") void TransitionToMainMenu();
 };
 
 
