@@ -724,11 +724,8 @@ void ASinkDownProjectCharacter::OnMovementModeChanged(EMovementMode PrevMovement
 // DiaryWidget
 void ASinkDownProjectCharacter::ToggleDiaryCollection()
 {
-	UE_LOG(LogTemp, Warning, TEXT("void ASinkDownProjectCharacter::ToggleDiaryCollection()"));
 	if (DiaryCollectionWidget)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Found DiaryCollectionWidget"));
-
 		DiaryCollectionWidget->ToggleVisibility();
 
 		if (APlayerController* PC = Cast<APlayerController>(GetController()))

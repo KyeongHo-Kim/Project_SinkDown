@@ -226,7 +226,8 @@ void USinkDownGameInstance::LoadGameplayContent()
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/BluePrints/Effects/Sounds/INGame/BP_MugunghwaGameZoneTrigger")));
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/BluePrints/Effects/Sounds/INGame/BP_MugunghwaMazeZoneTrigger")));
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/BluePrints/Effects/Sounds/INGame/BP_RadiatorZoneTrigger")));
-    GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/BluePrints/Effects/Sounds/INGame/BP_SteppingStonesGameBGMZoneTrigger")));
+    GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/BluePrints/Effects/Sounds/INGame/BP_SteppingStonesGameZoneTrigger")));
+
     GameplayAssets.Add(FSoftObjectPath(TEXT("/Game/BluePrints/Effects/Sounds/INGame/BP_MyhomeZoneTrigger")));
 
     //Animation

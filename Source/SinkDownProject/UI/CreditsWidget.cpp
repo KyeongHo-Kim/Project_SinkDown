@@ -67,12 +67,24 @@ void UCreditsWidget::StartNextEntry()
         }
 
         // Switch levels after a delay
-        FTimerHandle TimerHandle;
+       /* FTimerHandle TimerHandle;
         GetWorld()->GetTimerManager().SetTimer(TimerHandle,
             [this]()
             {
                 UGameplayStatics::OpenLevel(this, TEXT("/Game/Levels/MainMenuMap"));
 
+            },
+            BGMFadeOutDuration, false);
+        return;*/
+        FTimerHandle TimerHandle;
+        TWeakObjectPtr<UCreditsWidget> WeakThis(this);
+        GetWorld()->GetTimerManager().SetTimer(TimerHandle,
+            [WeakThis]()
+            {
+                if (WeakThis.IsValid())
+                {
+                    UGameplayStatics::OpenLevel(WeakThis.Get()->GetWorld(), TEXT("/Game/Levels/MainMenuMap"));
+                }
             },
             BGMFadeOutDuration, false);
         return;

@@ -99,8 +99,6 @@ void ADiary::OnInteract()
             if (UDiarySubsystem* DiarySubsystem = GameInstance->GetSubsystem<UDiarySubsystem>())
             {
                 DiarySubsystem->CollectDiaryPiece(PieceType);
-
-                UE_LOG(LogTemp, Warning, TEXT("DiarySubsystem->CollectDiaryPiece(PieceType);"));
             }
         }
 
